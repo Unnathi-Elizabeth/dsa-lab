@@ -1,0 +1,168 @@
+import java.util.*;
+class dbl{
+    public int num;
+    public String data;
+    dbl next;
+    dbl prev;
+    dbl(int n,String s){
+        num=n;
+        data=s;
+        next=null;
+        prev=null;
+    }
+    void disp(){
+        System.out.println(num+","+data);
+    }
+}
+class dll{
+    dbl first;
+    dbl last;
+    dll(){
+        first=null;
+        last=null;
+    }
+    void insertfirst(int n,String s){
+        dbl nl=new dbl(n,s);
+        if(isempty()){
+            first=nl;
+            last=nl;
+        }
+        else{
+            nl.next=first;
+            first.prev=nl;
+            first=nl;
+        }
+    }
+    void insertatp(int n,String s,int key){
+        dbl nl=new dbl(n,s);
+        dbl cur=first;
+        dbl previ=first;
+        if(key==1){
+            nl.next=first;
+            first.prev=nl;
+            first=nl; 
+        }
+        else{
+            for(int i=0;i<key;i++){
+                previ=cur;
+                cur=cur.next;
+            }
+            nl.next=previ.next;
+            previ.next=nl;
+            nl.prev=previ;
+            cur.prev=nl;
+
+        }
+    }
+    dbl delatp(int key){
+        dbl temp=first;
+        dbl cur=first;
+        if(key==0){
+            first=first.next;
+            return temp;
+        }
+        else{
+            for(int i=0;i<key-1;i++){
+                cur=cur.next;
+            }
+            temp=cur.next;
+            cur.next=cur.next.next;
+            return temp;
+        }
+
+    }
+    void display(){
+        dbl cur=first;
+        System.out.println("The list is:");
+        while(cur!=null){
+            cur.disp();
+            cur=cur.next;
+        }
+    }
+    void revdisp(){
+        dbl cur=last;
+        System.out.println("The reversed list is:");
+        while(last!=null){
+            cur.disp();
+            cur=cur.prev;
+        }
+    }
+    void ssort(){
+        dbl cur=first;
+        dbl previ=first;
+        while(cur!=null){
+            if(previ.data.compareTo(cur.data)>0){
+                dbl temp=new dbl(0,null);
+                temp.next=previ.next;
+                temp.prev=previ.prev;
+                previ.next=cur.next;
+                previ.prev=cur.prev;
+                cur.next=temp.next;
+                cur.prev=temp.prev;
+            }
+        }
+    }
+    void nsort(){
+        dbl cur=first;
+        dbl previ=first;
+        while(cur!=null){
+            if(previ.num>cur.num){
+                dbl temp=new dbl(0,null);
+                temp.next=previ.next;
+                temp.prev=previ.prev;
+                previ.next=cur.next;
+                previ.prev=cur.prev;
+                cur.next=temp.next;
+                cur.prev=temp.prev;
+            }
+        }
+    }
+    boolean isempty(){
+        return first==null;
+    }
+}
+
+
+
+
+public class dl {
+    public static void main(String[] args){
+        dll l=new dll();
+        System.out.println("Enter 1 to insert node at a position,2 to delete node at a position,3 to display list,4 to display reversed list,5 to sort based on string and number and 0 to exit:");
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        do{
+            switch(n){
+                case 1:{System.out.println("Enter num,string and position:");
+                        int a=sc.nextInt();
+                        String b=sc.nextLine();
+                        int c=sc.nextInt();
+                        l.insertatp(a,b,c);
+                        l.display();
+                        break;
+                    }
+                case 2:{System.out.println("Enter position:");
+                        int a=sc.nextInt();
+                        l.delatp(a);
+                        l.display();
+                        break;}
+                case 3:{l.display();
+                        break;}
+                case 4:{l.revdisp();
+                        break;}
+                case 5:{System.out.println("According to string");
+                        l.ssort();
+                        l.display();
+                        System.out.println("According to snumber");
+                        l.nsort();
+                        l.display();
+                        break;}
+                default:{System.out.println("Invalid entry");
+                         break;}
+            }
+            System.out.println("Enter 1 to insert node at a position,2 to delete node at a position,3 to display list,4 to display reversed list,5 to sort based on string and number and 0 to exit:");
+            n=sc.nextInt();
+        }while(n!=0);
+    }
+    
+}
