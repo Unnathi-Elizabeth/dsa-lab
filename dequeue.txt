@@ -1,0 +1,117 @@
+import java.util.*;
+class link{
+    public int data;
+    link next;
+    link prev;
+    link(int d){
+        data=d;
+        prev=null;
+        next=null;
+    }
+    void disp(){
+        System.out.println(data);
+    }
+}
+class ll{
+    link first;
+    link last;
+    ll(){
+        first=null;
+        last=null;
+    }
+    void infirst(int d){
+        link nl=new link(d);
+        if(isempty()){
+            first=nl;
+            last=nl;
+        }
+        else{
+            nl.next=first;
+            first.prev=nl;
+            first=nl;
+        }
+    }
+    void insertlast(int d){
+        link nl=new link(d);
+        if(isempty()){
+            first=nl;
+            last=nl;
+        }
+        else{
+            last.next=nl;
+            nl.prev=last;
+            last=nl;
+        }
+    }
+    link deletefirst(){
+        link temp=first;
+        if(first.next==null){
+            first=null;
+            last=null;
+        }
+        else{
+            first=first.next;
+            first.prev=null;
+        }
+        return temp;
+    }
+    link deletelast(){
+       link temp=last;
+        if(first.next==null){
+            first=null;
+            last=null;
+        }
+        else{
+            last=last.prev;
+            last.next=null;
+        }
+        return temp;
+    }
+    void display(){
+        link cur=first;
+        while(cur!=null){
+            cur.disp();
+            cur=cur.next;
+        }
+    }
+    boolean isempty(){
+        return first==null;
+    }
+}
+
+
+public class dequeue {
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        ll l=new ll();
+        System.out.println("Enter 1 to insert first,2 to insert last,3 to delete first,4 to delete last and 0 to exit:");
+        int key=sc.nextInt();
+        do{
+           switch(key){
+            case 1:{System.out.println("Enter data:");
+                    int d=sc.nextInt();
+                    l.infirst(d);
+                    l.display();
+                    break;}
+            case 2:{System.out.println("Enter data:");
+                    int d=sc.nextInt();
+                    l.insertlast(d);
+                    l.display();
+                    break;}
+            case 3:{l.deletefirst();
+                    l.display();
+                    break;}
+            case 4:{l.deletelast();
+                    l.display();
+                    break;}
+            default:{System.out.println("Invalid entry!");
+                     break;}
+
+        }
+        System.out.println("Enter 1 to insert first,2 to insert last,3 to delete first,4 to delete last and 0 to exit:");
+        key=sc.nextInt();
+        }while(key!=0);
+        
+    }
+    
+}
