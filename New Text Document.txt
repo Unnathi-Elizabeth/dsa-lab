@@ -1,0 +1,184 @@
+import java.util.Scanner;
+class dlink{
+  public String s1;
+  public int dat;
+  public dlink next;
+  public dlink prev;
+  public dlink(String s,int d){
+    s1=s;
+    dat=d;
+    next=null;
+    prev=null;
+  }
+  public void displaylink(){
+    System.out.println("String:"+s1+" Number:"+dat);
+  }
+}
+class dlinklist{
+  public dlink first;
+  public dlink last;
+  public dlinklist(){
+    first=null;
+    last=null;
+  }
+  boolean isempty(){
+    return first==null;
+  }
+  public void addfirst(String s,int d){
+    dlink nl=new dlink(s,d);
+    if(isempty()){
+      first=nl;
+      last=nl;
+    }
+    else{
+      nl.next=first;
+      first.prev=nl;
+      first=nl;
+    }
+  } 
+  public void addlast(String s,int d){
+    dlink nl=new dlink(s,d);
+    if(!isempty()){
+      last.next=nl;
+      nl.prev=last;
+      last=nl;
+  }
+  else{
+    first=nl;
+    last=nl;
+  }
+}
+public void insertn(String s,int d,int p){
+  dlink nl=new dlink(s,d);
+  int n=1;
+  dlink cur=first;
+  while(cur!=null){
+    if(n==p-1){
+      nl.next=cur;
+      nl.prev=cur.prev;
+      cur.prev.next=nl;
+      cur.prev=nl;
+      break;
+    }
+    else{
+      n++;
+      cur=cur.next;
+    }
+  }
+  
+}
+public void deleten(int p){
+  int n=0;
+  dlink cur=first;
+  while(cur!=null){
+    if(n==p-1){
+      cur.prev.next=cur.next;
+      cur.next.prev=cur.prev;
+      break;
+    }
+    else{
+      n++;
+      cur=cur.next;
+    }
+
+  }
+}
+public void displaylist(){
+  dlink cur=first;
+  while(cur!=null){
+    cur.displaylink();
+    cur=cur.next;
+  }
+}
+public void displaylistrev(){
+  dlink cur=last;
+  while(cur!=null){
+    cur.displaylink();
+    cur=cur.prev;
+  }
+}
+public void sort(){
+  dlink cur=null;
+  dlink index=null;
+  for(cur=first;cur.next!=null;cur=cur.next){
+    for(index=cur.next;index!=null;index=index.next){
+      if(cur.dat>index.dat){
+        int temp=cur.dat;
+        cur.dat=index.dat;
+        index.dat=temp;
+        String temp1=cur.s1;
+        cur.s1=index.s1;
+        index.s1=temp1;
+      }
+    }
+  }
+}
+public void sortstring(){
+  dlink cur=null;
+  dlink index=null;
+  for(cur=first;cur.next!=null;cur=cur.next){
+    for(index=cur.next;index!=null;index=index.next){
+      String c1=cur.s1;
+      String c2=index.s1;
+      if(c1.compareTo(c2)>0){
+        int temp=cur.dat;
+        cur.dat=index.dat;
+        index.dat=temp;
+        String temp1=cur.s1;
+        cur.s1=index.s1;
+        index.s1=temp1;
+      }
+    }
+  }
+}
+}
+class sll{
+  public static void main(String[] args){
+    dlinklist dll=new dlinklist();
+    Scanner sc=new Scanner(System.in);
+    System.out.println("Enter 1  to add item,2 to add item at nth position,3 to delete item at nth position,4 to display the list,5 display the reversed list,6 to sort list based on number,7 to sort list based on string and 0 to exit:");
+    int n=sc.nextInt();
+    do{
+      switch(n){
+        case 1:{System.out.println("Enter number and string:");
+                int num=sc.nextInt();
+                String d=sc.next();
+                dll.addlast(d,num);
+                dll.displaylist();
+                break;}
+        case 2:{System.out.println("Enter number and string and position:");
+                int num=sc.nextInt();
+                String d=sc.next();
+                int pos=sc.nextInt();
+                dll.insertn(d,num,pos);
+                dll.displaylist();               
+
+                break;
+
+        }
+        case 3:{System.out.println("Enterposition:");
+                int pos=sc.nextInt();
+                dll.deleten(pos);
+                dll.displaylist();               
+                break;
+
+        }
+        case 4:{dll.displaylist();               
+                break;}
+        case 5:{dll.displaylistrev();               
+                break;}
+        case 6:{dll.sort();
+                dll.displaylist();
+                break;}
+        case 7:{dll.sortstring();
+                dll.displaylist();
+                break;}
+        default:{System.out.println("Invalid input");
+                 break;}
+        }
+        System.out.println("Enter 1  to add item,2 to add item at nth position,3 to delete item at nth position,4 to display the list,5 display the reversed list,6 to sort list based on number,7 to sort list based on string and 0 to exit:");
+        n=sc.nextInt();
+      }while(n!=0);
+    }
+  }
+
