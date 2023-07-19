@@ -1,0 +1,177 @@
+import java.util.Scanner;
+class dll{
+          public static void main(String[] args)
+                        {
+                          Scanner input=new Scanner(System.in);
+                          int f=-1;
+                          linkedlist l = new linkedlist();
+                          while (f!=0)
+                          {
+                       
+                          System.out.println("1.Create linkedlist\n2.insert first\n3.display list\n4.delete first\n5.insert last\n6.insert before key\n7.Display reverse\nSelect an operation : ");
+                          
+                          f=input.nextInt();
+                          if (f==0)
+                             break;
+                          else
+                               {
+                                switch (f)
+                                       {
+                                        case 1 : 
+                                                 System.out.println("Enter no .of data items : ");
+                                                 int n;
+                                                 n=input.nextInt();
+                                                 System.out.println("Enter the datas : ");
+                                                 for (int i=0;i<n;i++)
+                                                    {                                                    
+                                                      int temp;
+                                                      temp=input.nextInt();
+                                                      l.insertlast(temp);  
+                                                    }
+                                                 break;
+                                        case 2 : System.out.println("Enter the data : ");
+                                                 int temp;
+                                                 temp=input.nextInt();
+                                                 l.insertfirst(temp);
+                                                 break;
+                                        case 3 : l.displaylist();
+                                                 break;
+                                        case 4 : l.deletefirst();
+                                                 l.displaylist();
+                                                 break;
+                                        case 5 : System.out.println("Enter the data : ");
+                                                 int t;
+                                                 t=input.nextInt();
+                                                 l.insertlast(t);
+                                                 break;
+                                        case 6 : System.out.println("Enter the data : ");
+                                                 int tmp;
+                                                 int a;
+                                                 tmp=input.nextInt();
+                                                 System.out.println("Enter key : ");
+                                                 a=input.nextInt();
+                                                 l.insertbkey(tmp,a);
+                                                 break;
+                                        case 7 : System.out.println("The list in reverse order is : ");
+                                                 l.displayreverse();
+                                                 break;
+
+                                       }
+                               }
+                          }
+                          input.close();  
+                        }        
+}
+class link
+      {
+        public link next;
+        public int data;
+        public link prev;
+             
+        public link()
+               {
+                data=0;
+                next=null;
+                prev=null;
+               }
+        public link (int d)
+               {
+                data=d;
+               }
+        public void displaylink()
+              {
+                System.out.print(" "+data);
+              }
+      }
+class linkedlist
+      {
+        link first;
+        link last;
+        public linkedlist()
+               {
+                first=null;
+                last=null;
+               }
+        public void insertfirst(int a)
+               {
+                 link nl =new link(a);
+                 nl.next=first;
+                 nl.prev=null;
+                 first=nl;
+                 if (last == null) 
+                 { 
+                  last = nl;
+                   }
+               }
+        public void displaylist()
+               {
+                System.out.println("list is : ");
+                link current=first;
+                while(current!=null)
+                     {
+                        current.displaylink();
+                        current=current.next;
+                     }   
+                System.out.println(" ");           
+               }
+        public void deletefirst()
+               {
+                first=first.next;
+               }
+       public void insertbkey(int a,int key)
+               {
+                link current=first;
+                link prev=first;
+                while(current!=null)
+                     {
+                        if (current.data==key)
+                           {
+                            break; 
+                           }
+                        prev=current;
+                        current=current.next;
+                      
+                     }  
+                 if (current==first)
+                 {
+                   insertfirst(a);
+                 }
+                 else
+                 {
+                 link nl = new link(a);   
+                 nl.next=current;
+                 prev.next=nl;  
+                 nl.prev=prev; 
+                 }
+                           
+               }
+       public void insertlast(int a)
+              {
+                  
+                     if (first==null)
+                        {
+                          insertfirst(a);
+                        }
+                     else
+                         {
+                            link nl = new link(a);
+                            last.next=nl;
+                            nl.prev=last;
+                            last=nl;                           
+                         }
+              }
+        public void displayreverse()
+               {
+                link current=last;
+                while(current!=null)
+                     {
+                       current.displaylink();
+                       current=current.prev; 
+                     }
+                System.out.println(" "); 
+               }
+       
+
+        
+      }
+
