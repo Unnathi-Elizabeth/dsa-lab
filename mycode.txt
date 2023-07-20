@@ -1,0 +1,122 @@
+import java.util.*;
+class link{
+    public int data;
+    public link prev;
+    public link next;
+    public link(int d){
+        data=d;
+        next=null;
+        prev=null;
+    }
+    void disp(){
+        System.out.println(data);
+    }
+}
+class ll{
+    public link first;
+    public link last;
+    ll(){
+        first=null;
+        last=null;
+    }
+    void insertfirst(int d){
+        link nl=new link(d);
+        if(isempty()){
+            first=nl;
+            last=nl;
+        }
+        else{
+            nl.next=first;
+            first.prev=nl;
+            first=nl;
+        }
+    }
+    void insertlast(int d){
+        link nl=new link(d);
+        if(isempty()){
+            first=nl;
+            last=nl;
+        }
+        else{
+            last.next=nl;
+            nl.prev=last;
+            last=nl;
+        }
+    }
+    link deletefirst(){
+        link temp=first;
+        first=first.next;
+        first.prev=null;
+        return temp;
+    }
+    link deleteatp(int p){
+        link cur=first;
+        link temp=first;
+        if(p==0){
+            first=first.next;
+            first.prev=null;
+        }
+        for(int i=0;i<p-1;i++){
+            cur=cur.next;
+        }
+        temp=cur.next;
+        cur.next.prev=cur.prev;
+        cur.prev.next=cur.next;
+        return temp;
+    }
+    void display(){
+        link cur=first;
+        System.out.println("The ll is: ");
+        while(cur!=null){
+            cur.disp();
+            cur=cur.next;
+        }
+    }
+    boolean isempty(){
+        return(first==null);
+    }
+    void insertatp(int d,int p){
+        link nl=new link(d);
+        link cur=first;
+        if(p==0){
+            nl.next=first;
+            first.prev=nl;
+            first=nl;
+        }
+        else{
+            for(int i=0;i<p;i++){
+                cur=cur.next;
+            }
+            nl.next=cur;
+            nl.prev=cur.prev;
+            //nl.next=cur;
+            cur.prev=nl;
+            cur.prev.next=nl;
+        }
+    }
+}
+
+public class singll {
+    public static void main(String[] args){
+        ll s=new ll();
+        s.insertfirst(3);
+        s.display();
+        s.insertlast(5);
+        s.display();
+        s.insertfirst(10);
+        s.display();
+        s.deletefirst();
+        s.display();
+        s.insertfirst(9);
+        s.display();
+        s.insertfirst(8);
+        s.display();
+        s.deleteatp(2);
+        s.display();
+        //s.deleteatp(1);
+        //s.display();
+        s.insertatp(2,1);
+        s.display();
+    }
+    
+}
